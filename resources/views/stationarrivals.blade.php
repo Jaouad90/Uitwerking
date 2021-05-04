@@ -18,7 +18,7 @@
 
 <body class="antialiased">
     <script>
-        var arrivalsOfStationData = @json($arrivalsOfStationData) ;  
+        @json($stationArrivalsData) ;  
     </script>
     @include('layout.topbar')
 
@@ -45,7 +45,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($arrivalsOfStationData['arrivals'] as $stationArrival)
+                                    @foreach ($stationArrivalsData['arrivals'] as $stationArrival)
                                         <tr>
                                             @if(!empty($stationArrival['plannedDateTime']))
                                             <td>{{date("H:i",strtotime($stationArrival['plannedDateTime']))}}</td>

@@ -37,7 +37,7 @@ class SearchController extends Controller
         $stationsJSON = Cache::get('allStations');
 
         // Return stationsData and arrivalsOfStationData to view
-        return view('arrivalsOfStation', ['arrivalsOfStationData' => $arrivalsJSON,'stationsData' => $stationsJSON]);
+        return view('stationarrivals', ['stationArrivalsData' => $arrivalsJSON,'stationsData' => $stationsJSON]);
     }
 
 }

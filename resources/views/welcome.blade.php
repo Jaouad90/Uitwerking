@@ -18,7 +18,7 @@
 
 <body class="antialiased">
     <script>
-        var stationsData = @json($stationsData) ;  
+        @json($stationsData) ;  
     </script>
     @include('layout.topbar')
 
