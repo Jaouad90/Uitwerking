@@ -29,5 +29,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'nsapi' => [
+        'url' => env('NS_API_BASE_URL'),
+        'key' => env('NS_SUBSCRIPTION_KEY'),
+    ],
 
 ];

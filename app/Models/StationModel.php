@@ -3,12 +3,14 @@
 namespace App\Models;
    
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
   
 class StationModel extends Model
 {
     private $UICCode;
     private $stationName;
-    private $allStations;
+    private $allStationsCollection;
+    
 
     function setStationModel($UICCode, $stationName)
     {
@@ -30,21 +32,23 @@ class StationModel extends Model
         return $this->UICCode;
     }
 
-    function setAllStations($stationModel)
+    function setAllStations($stationsJSON)
     {
-        foreach($stationModel as $station)
-        {
-            $this->setStationModel($station['UICCode'], $station['namen']['lang']);
-            empty($station) ?  var_dump('append failed!') : $this->allStations[] = $this->getStationModel();
-        }
+        $allStationsArray =  array();
 
-        // $date = date('Y/m/d H:i:s');
-        // Storage::disk('resources')->put('TrainStations'.$date.'.json', json_encode($result));
+        foreach($stationsJSON as $stationJSON)
+        {
+            $newStationObject = new StationModel;
+            $newStationObject->setStationModel($stationJSON['UICCode'], $stationJSON['namen']['lang']);
+            $allStationsArray[] = $newStationObject;
+        }
+        $this->allStationsCollection = $allStationsArray;
 
     }
 
     function getAllStations()
     {
-        return $this->allStations;
+
+        return $this->allStationsCollection;
     }
 }

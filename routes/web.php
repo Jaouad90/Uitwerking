@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FooBarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 
@@ -14,10 +15,5 @@ use App\Http\Controllers\SearchController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', [SearchController::class, 'index']);
-
-Route::get('autocomplete', 'SearchController@autocomplete')->name('autocomplete');
+Route::get('/search/{id}', [SearchController::class, 'searchArrivalsOfStation']);

@@ -1,3 +1,9 @@
+
+<!-- Returns the JSON representation of $stationCollection and assign the JSON to js var -->
+<script>
+var stationsData = @json($stationsData) ;   
+</script>
+
 <section id="header">
     <div class="container">
         <div class="row">
@@ -6,12 +12,7 @@
                     <div class="search-body">
                         <form>
                             <div class="form-group">
-                                <input class="typeahead form-control" placeholder="Zoek halte of station"  type="text">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
+                                <input id="autoCompletionInput" class="form-control" placeholder="Zoek halte of station" autocomplete="off"  type="text">                                  
                             </div>
                         </form>
                     </div>

@@ -10,25 +10,17 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Styling -->
-    <link href="{{ url('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ url('/css/normalize.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
-
+    <link href="{{  URL::asset('css/app.css') }}" rel="stylesheet" >
+    <!-- Todo: Fix Webpack and remove this. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
 <body class="antialiased">
-
+    <script>
+        var stationsData = @json($stationsData) ;  
+    </script>
     @include('layout.topbar')
-
-    @foreach ($response as $item)
-    {
-        <tr>
-        <td>{{$item->getStationName()}}</td>
-        <td>{{$item->getUICCode()}}</td>
-        </tr>
-    }
-    @endforeach
 
         <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
             <div class="text-center text-sm text-gray-500 sm:text-left">
@@ -55,8 +47,14 @@
                 Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
             </div>
         </div>
+        <!-- Todo: Fix Webpack and remove this. -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('js/all.js') }}"></script>
+        
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js" integrity="sha512-HWlJyU4ut5HkEj0QsK/IxBCY55n5ZpskyjVlAoV9Z7XQwwkqXoYdCIC93/htL3Gu5H3R4an/S0h2NXfbZk3g7w==" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
