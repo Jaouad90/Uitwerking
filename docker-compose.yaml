@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+
+  app:
+    build:
+      context: docker
+    ports:
+      - '${NGINX_FORWARD_PORT:-8000}:80'
+    volumes:
+      - ${APP_PATH}:/var/www/html
+      - ${PHP_FPM_VOLUME_PATH}/logs:/var/log/nginx
+      - ${NGINX_VOLUME_PATH}/logs:/var/www/html/resources/storage/logs

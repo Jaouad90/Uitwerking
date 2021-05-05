@@ -1,7 +1,7 @@
 
 <!-- Returns the JSON representation of $stationCollection and assign the JSON to js var -->
 <script>
-var stationsData = @json($stationsData) ;   
+    var stationsData = @json($stationsData);
 </script>
 
 <section id="header">

@@ -6,7 +6,8 @@ const ajaxService = function(routeSearch, value, label){
        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
        data:{value:value, label:label},
        success:function(data){
-        console.log("ajaxRequest succesfull!");
+        console.log(data);
+        
        },
        error: function(response) {
         console.log(response);
@@ -157,20 +158,17 @@ const DEFAULTS = {
     onSelectItem: ({label, value}) => {
       var routeSearch = "/search/:id";
       routeSearch = routeSearch.replace(':id', value);
-      console.log(routeSearch);
 
-      ajaxService(routeSearch, value, label);
-    } 
-});
+      window.location.replace(routeSearch)
+    }
+  });
 
-  function setData4AutoCompletion(){
-
+  function setData4AutoCompletion() {
     jsonDataStations = stationsData.map(function(station) {
-    return trainStationJson = {"label":station.namen.lang, "value":station.UICCode} ;
+      return trainStationJson = {"label":station.namen.lang, "value":station.UICCode} ;
     });
 
-  return jsonDataStations;
-}
+    return jsonDataStations;
+  }
 
 ac.setData(setData4AutoCompletion());
-

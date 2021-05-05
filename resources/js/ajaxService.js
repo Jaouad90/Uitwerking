@@ -6,7 +6,8 @@ const ajaxService = function(routeSearch, value, label){
        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
        data:{value:value, label:label},
        success:function(data){
-        console.log("ajaxRequest succesfull!");
+        console.log(data);
+        
        },
        error: function(response) {
         console.log(response);

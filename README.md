@@ -1,62 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Usage
+Run `docker-compose up -d` to start the application container locally
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+check if container state is up `docker-compose ps`
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Samenvatting:
+## Tijdinschatting
+* Gedachte:         4 dagen met gemak
+* Werkelijkheid:    8 dagen met veel stress en een sterke leercurve
+## Project
+Hoe simpel de documentatie ook wordt gecreeerd. Tijdens de installatie via composer kwam ik een lokale php issue tegen. De lokale php had ik verwijderd en het project opgezet in mijn xampp folder die al php bevat. Sindsdien heb ik de installatie met succes kunnnen uitvoeren.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Voor de configuratie zijn een aantal installaties vooraf geinstalleerd zoals sass, bootstrap. De webpack script is aangepast om bestanden te compilen naar de public folder. Door te compilen zal de sass code geconverteerd worden naar css code en gepubliceerd worden aan de eindgebruiker/browser. Dit moet gebeuren, omdat de browser geen sass code begrijpt. Daarnaast wordt in het volgende script javascript bestanden bijelkaar gevoegd in 1 bestand `/all.js` en geplaatst in het `/public/all.js` folder .
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps()
+    .scripts([
+        'resources/js/ajaxService.js',
+        'resources/js/autoCompletion.js'
+    ], 'public/js/all.js')
+```
 
-## Learning Laravel
+Ik wou de onderdelen exact hetzelfde maken als die van het originele site. Dus koos ik ervoor om een autocomplete toe te passen als zoek veld. Hiervoor moest ik mijn onderzoekje doen en kwam ik al gauw tutorials tegen van hoe het geimplementeerd kan worden. Toen ik het ging implementeren kreeg ik er errors voor terug en na elke die ik oploste kwam er een ander voor terug :-D.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Sindsdien ben ik merendeels aan het googlen geweest en heb ik de laravel docs bij de hand. Hierdoor heb ik geleerd hoe ik data kan returnen naar mijn view vanuit de controller en hoe ik deze data kan encoden voor de javascript van de autocomplete. Na enige tijd te hebben verloren en veel te hebben gelezen kwam ik erachter dat ik voor het laatste het volgende moest gebruiken: `var stationsData = @json($stationsData);`. Hierdoor kon ik de data uit de controller in mijn autocomplete script gebruiken. 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Toen kwam de uitdaging voor mij om de gekozen data terug te krijgen in de controller en hieraan ben ik veel tijd aan kwijt geraakt en heb er zeker van geleerd. Want?
+In eerste instantie kwam ik op het internet tegen dat het op de volgende manier kan:
+`window.location.href`
+Maar integendeel kreeg ik het niet werkend en ben ik verder gaan zoeken. Zo kwam ik op de Ajax Request oplossing terecht. Nadat ik die had geimplementeerd kreeg ik mijn view terug als xhr bestand en werd niet weergegeven in de browser. Dit kon ik niet oplossen en heb ik toen mijn vragen neergelegd bij de laracast community. Die hebben mij uitgelegd dat het komt omdat mijn AJAX request asynchroon werkt en dat het een response terug krijgt. Dat is niet wat ik nodig had, want ik wil vanuit mijn controller de view returnen met mijn opgehaalde api data.
+```
+const ajaxService = function(routeSearch, value, label){
+    
+    $.ajax({
+       type:'GET',
+       url:routeSearch,
+       headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+       data:{value:value, label:label},
+       success:function(data){
+        console.log(data);
+        $('#arrival-list').append(data)
+       },
+       error: function(response) {
+        console.log(response);
+       }
+    });
 
-## Laravel Sponsors
+}
+```
+Wat ik nodig heb is het opvragen van de route. Hiervoor had ik 1 line of code nodig:
+`window.location.replace(routeSearch)`
+Nadat ik hierover ingelicht was heb ik het werkend kunnen krijgen. Nu wordt vanuit de autocomplete functie direct de route aangeroepen zonder AJAX of iets dergelijks.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Aangezien ik dit nu werkend heb; een aantal dagen verder ben en totaal niet weet hoe lang het nog zal duren. Heb ik de styling maar uitgesloten. Nu ik de overzicht heb wil ik laravel eerst goed onder de knie krijgen. Want iedere keer dat ik code geschreven had vond ik in de docs een manier om het netter te doen.
+Voorbeeld: hardcoded key en url voor de API calls. Geleerd hoe ik deze vastleg in de environment en de env in de config.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+## Conclusie
+Waarschijnlijk had ik mezelf overschat :-D of tenminste ik weet het zeker. Goede opdracht en heb er veel van mogen leren en ben er zeker nog niet klaar mee. Maar mocht ik het opnieuw moeten doen dan doe ik het binnen een dag. Zonder de Docker, want dat is iets dat ik mezelf nog moet aanleren. Voor Docker heb ik raad van een vriend gekregen doormiddel van een videocall. Waarbij hij mij heeft laten zien hoe een docker container gecreeerd kan worden.
 
-## Contributing
+Tot slot, weet ik in ieder geval wel wat ik heb gedaan en zijn mijn keuzes bewust gemaakt. Of het de beste manier is moet nog blijken wanneer ik er feedback op krijg. Alhoewel ik zelf ook weet dat het één en ander beter kan. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Naast het coderen heb ik ook mijn best gedaan om te voldoen aan de dev principe DRY en de andere principes zie ik meer als toepasselijk wanneer er meer code is. De architectuur is naar mijn gevoel goed opgesteld waardoor er onderscheid wordt gemaakt tussen Model/Controllers/Services/Views/
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
