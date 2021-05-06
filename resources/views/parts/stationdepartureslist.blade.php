@@ -24,6 +24,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($stationDeparturesData['departures'] as $stationDeparture)
+                                    @if ($loop->index===10)
+                                            @break
+                                        @endif
                                     <tr>
                                         @if(!empty($stationDeparture['plannedDateTime']))
                                         <td>{{date("H:i",strtotime($stationDeparture['plannedDateTime']))}}</td>
