@@ -2,6 +2,14 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+#content-container {
+    display: flex;
+    align-items: center;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* MainNav */
 #header {
     border-bottom: rgba(0, 0, 0, 0.3) 1px solid;
@@ -38,6 +46,10 @@ body {
 }}
 
 /* Station arrivals table */
+#project-tab-container {
+    flex: 1 1 auto;
+}
+
 .project-tab {
     padding: 10%;
     margin-top: -8%;
@@ -79,4 +91,17 @@ body {
 }
 .center{
     justify-content: center;
+}
+
+/* Trip advice container */
+#trip-advice-container {
+    flex: 1 1 auto;
+}
+
+.trip-advice-container-bg{
+    background-color: black;
+    display: inline-block;
+    border-radius: 5px;
+    color: white;
+    padding: 20px;
 }

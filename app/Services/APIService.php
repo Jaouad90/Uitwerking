@@ -12,30 +12,53 @@ class APIService
 
     }
 
-    private function fetch($endpoint, ?string $stationID)
+    private function fetch($endpoint, ?string $stationID, ?string $maxJourneys, ?string $originUicCode, ?string $destinationUicCode, ?string $mustQueryTripData)
     {
         $stationID==null ? $stationID = "" : $stationID = "uicCode=".$stationID;
+        $maxJourneys==null ? $maxJourneys = "" : $maxJourneys = "maxJourneys=".$maxJourneys;
+        $originUicCode==null ? $originUicCode = "" : $originUicCode = "originUicCode=".$originUicCode;
+        $destinationUicCode==null ? $destinationUicCode = "" : $destinationUicCode = "destinationUicCode=".$destinationUicCode;
+        $endpoint!=="trips?" ? $mustQueryTripData = "" : "";
 
         $response = Http::retry(3, 100)->timeout(10)->withHeaders([
             'Ocp-Apim-Subscription-Key' => config('services.nsapi.key')
-        ])->get(config('services.nsapi.url').$endpoint.$stationID);
+        ])->get(config('services.nsapi.url').$endpoint.$stationID.$maxJourneys.$originUicCode.$destinationUicCode.$mustQueryTripData);
 
         $response->throw();
+        if($endpoint==="trips?")
+{
+    dd($response);
+
+}
 
         return $response;
     }
 
-    function getArrivalsOfStationAPI($stationID)
+    function getDeparturesOfStationAPI($stationID)
     {
-        $endpoint = "arrivals?";
+        $endpoint = "departures?";
+        $maxJourneys = "10";
 
-        return $this->fetch($endpoint, $stationID)['payload'];
+        return $this->fetch($endpoint, $stationID, null, null, null, null)['payload'];
     }
 
     function getAllStationsAPI()
     {
         $endpoint = "stations";
 
-        return $this->fetch($endpoint, null)['payload'];
+        return $this->fetch($endpoint, null, null, null, null, null)['payload'];
+    }
+
+    function getTripDataAPI($originUicCode, $destinationUicCode)
+    {
+
+        // snelle oplossing
+        $mustQueryTripData = "&originWalk=false&originBike=false&originCar=false&destinationWalk=false&destinationBike=false&destinationCar=false&shorterChange=false&travelAssistance=false&searchForAccessibleTrip=false&localTrainsOnly=false&excludeHighSpeedTrains=false&excludeTrainsWithReservationRequired=false&yearCard=false&discount=NO_DISCOUNT&travelClass=2&polylines=false&passing=false&travelRequestType=DEFAULT";
+
+        $endpoint = "trips?";
+
+        print($originUicCode.$destinationUicCode);
+
+        return $this->fetch($endpoint, null, null, $originUicCode, $destinationUicCode, $mustQueryTripData)['payload'];
     }
 }

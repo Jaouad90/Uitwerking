@@ -1,7 +1,8 @@
 # Usage
 Run `docker-compose up -d` to start the application container locally
 
-check if container state is up `docker-compose ps`
+Check if container state is up `docker-compose ps`
+
 
 
 # Samenvatting:
@@ -50,12 +51,19 @@ const ajaxService = function(routeSearch, value, label){
 
 }
 ```
-Wat ik nodig heb is het opvragen van de route. Hiervoor had ik 1 line of code nodig:
+Wat ik nodig heb is het opvragen van de route (redirect). Hiervoor had ik 1 line of code nodig:
 `window.location.replace(routeSearch)`
 Nadat ik hierover ingelicht was heb ik het werkend kunnen krijgen. Nu wordt vanuit de autocomplete functie direct de route aangeroepen zonder AJAX of iets dergelijks.
 
 Aangezien ik dit nu werkend heb; een aantal dagen verder ben en totaal niet weet hoe lang het nog zal duren. Heb ik de styling maar uitgesloten. Nu ik de overzicht heb wil ik laravel eerst goed onder de knie krijgen. Want iedere keer dat ik code geschreven had vond ik in de docs een manier om het netter te doen.
 Voorbeeld: hardcoded key en url voor de API calls. Geleerd hoe ik deze vastleg in de environment en de env in de config.
+
+## Twijfels
+APIService.php ~ Voor het fetchen heb ik tallen parameters die de query parameters moeten voorstellen. Het raakt al snel overzichtelijk en ik vraag mij wat hier een nette manier voor is.
+
+Error handling mist.
+
+
 
 
 ## Conclusie

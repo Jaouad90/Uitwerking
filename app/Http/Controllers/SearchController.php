@@ -1,5 +1,5 @@
 <?php
-  
+
 namespace App\Http\Controllers;
 
 use App\Services\APIService;
@@ -35,18 +35,56 @@ class SearchController extends Controller
     }
 
     /**
-     * Retrieves the arrivals of the given station ID
+     * Retrieves the departures of the given station ID
      * 
-     * @param Request $request The request object
      * @param int     $id      The station ID
      * 
      * @return view
      */
-    function searchArrivalsOfStation(Request $request, int $id)
+    function searchDeparturesOfStation($id)
     {
-        $arrivalsJSON = $this->apiService->getArrivalsOfStationAPI($id);
+        Cache::put('chosenStationID', $id);
+        $departuresJSON = $this->apiService->getDeparturesOfStationAPI($id);
+
+        // Return stationsData and departuresOfStationData to view
+        return view('homepage', ['stationDeparturesData' => $departuresJSON, 'stationsData' => $this->stationsJSON]);
+    }
+
+    /**
+     * Retrieves the trip between 2 chosen station based on the station id's
+     * 
+     * @param Request    $request      The Request class
+     * 
+     * @return view
+     */
+    function searchTrip(Request $request)
+    {
+
+        $destinationStation = "";
+        $chosenStationID = Cache::get('chosenStationID');
+
+        // TODO: de request parameter heeft geen spaties meer. 
+        // Waardoor er geen vergelijking gemaakt worden om de id te vinden van het station
+
+        foreach ($this->stationsJSON as $station) 
+        {
+
+                foreach ($this->stationsJSON as $station) {
+                    $key = array_search($request['destinationStationName'], $station, false);
+                    if ($key !== false) {
+                        $destinationStation = $station['UICCode'];
+                        break;
+                    }else
+                    {
+                        return response('De ID van de gekozen bestemming station is niet gevonden!!!');
+                    }
+                }
+        }
+
+        $arrivalsJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
+        dd($arrivalsJSON);
 
         // Return stationsData and arrivalsOfStationData to view
-        return view('homepage', ['stationArrivalsData' => $arrivalsJSON, 'stationsData' => $this->stationsJSON]);
+        return view('homepage', ['stationsData' => $this->stationsJSON]);
     }
 }

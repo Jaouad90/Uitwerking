@@ -16,4 +16,5 @@ use App\Http\Controllers\SearchController;
 */
 
 Route::get('/', [SearchController::class, 'index']);
-Route::get('/search/{id}', [SearchController::class, 'searchArrivalsOfStation']);
+Route::get('/search/{id}', [SearchController::class, 'searchDeparturesOfStation']);
+Route::get('/tripadvice', [SearchController::class, 'searchTrip'])->name('tripadvice');
