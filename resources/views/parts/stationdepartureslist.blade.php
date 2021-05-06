@@ -24,7 +24,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($stationDeparturesData['departures'] as $stationDeparture)
-                                    @if ($loop->index===10)
+                                        @if ($loop->index===10)
                                             @break
                                         @endif
                                     <tr>
