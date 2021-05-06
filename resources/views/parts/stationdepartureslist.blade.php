@@ -5,7 +5,7 @@
             <div class="row center">
                 <div class="col-md-6">
                     <nav>
-                        <div class="nav nav-tabs nav-fill col-sm-6" id="nav-tab" role="tablist" >
+                        <div class="nav nav-tabs nav-fill col-sm-6" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-train-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Trein</a>
                             <a class="nav-item nav-link" id="nav-metro-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Metro</a>
                             <a class="nav-item nav-link" id="nav-bustram-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Bus + Tram</a>
@@ -23,7 +23,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($stationDeparturesData['departures'] as $stationDeparture)
+                                    @foreach ($stationDeparturesData['departures'] as $stationDeparture)
                                     <tr>
                                         @if(!empty($stationDeparture['plannedDateTime']))
                                         <td>{{date("H:i",strtotime($stationDeparture['plannedDateTime']))}}</td>
@@ -46,7 +46,7 @@
                                         <td></td>
                                         @endif
                                     </tr>
-                                @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

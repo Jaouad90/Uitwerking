@@ -46,7 +46,6 @@ class SearchController extends Controller
         Cache::put('chosenStationID', $id);
         $departuresJSON = $this->apiService->getDeparturesOfStationAPI($id);
 
-        // Return stationsData and departuresOfStationData to view
         return view('homepage', ['stationDeparturesData' => $departuresJSON, 'stationsData' => $this->stationsJSON]);
     }
 
@@ -63,28 +62,25 @@ class SearchController extends Controller
         $destinationStation = "";
         $chosenStationID = Cache::get('chosenStationID');
 
-        // TODO: de request parameter heeft geen spaties meer. 
+        // ISSUE: de request parameter heeft geen spaties meer. 
         // Waardoor er geen vergelijking gemaakt worden om de id te vinden van het station
 
-        foreach ($this->stationsJSON as $station) 
-        {
+        foreach ($this->stationsJSON as $station) {
 
-                foreach ($this->stationsJSON as $station) {
-                    $key = array_search($request['destinationStationName'], $station, false);
-                    if ($key !== false) {
-                        $destinationStation = $station['UICCode'];
-                        break;
-                    }else
-                    {
-                        return response('De ID van de gekozen bestemming station is niet gevonden!!!');
-                    }
+            foreach ($this->stationsJSON as $station) {
+                $key = array_search($request['destinationStationName'], $station, false);
+                if ($key !== false) {
+                    $destinationStation = $station['UICCode'];
+                    break;
+                } else {
+                    return response('De ID van de gekozen bestemming station is niet gevonden!!!');
                 }
+            }
         }
 
         $arrivalsJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
         dd($arrivalsJSON);
 
-        // Return stationsData and arrivalsOfStationData to view
         return view('homepage', ['stationsData' => $this->stationsJSON]);
     }
 }

@@ -7,9 +7,9 @@
             <a href="{{ route('tripadvice', ['destinationStationName' => $tripAdvice['direction']]) }}" class="trip-advice-content">
                 {{$tripAdvice['direction']}}
 
-            </div>
         </div>
-        @endforeach
     </div>
+    @endforeach
+</div>
 </div>
 @endif
