@@ -142,7 +142,7 @@ const DEFAULTS = {
       var routeSearch = "/search/:id";
       routeSearch = routeSearch.replace(':id', value);
 
-      window.location.replace(routeSearch)
+      window.location.replace(routeSearch+"/"+label)
     }
   });
 

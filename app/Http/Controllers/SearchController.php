@@ -41,12 +41,12 @@ class SearchController extends Controller
      * 
      * @return view
      */
-    function searchDeparturesOfStation($id)
+    function searchDeparturesOfStation($id, $name)
     {
         Cache::put('chosenStationID', $id);
         $departuresJSON = $this->apiService->getDeparturesOfStationAPI($id);
 
-        return view('homepage', ['stationDeparturesData' => $departuresJSON, 'stationsData' => $this->stationsJSON]);
+        return view('homepage', ['stationDeparturesData' => $departuresJSON, 'chosenStationName' => $name, 'stationsData' => $this->stationsJSON]);
     }
 
     /**
@@ -78,9 +78,9 @@ class SearchController extends Controller
             }
         }
 
-        $arrivalsJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
-        dd($arrivalsJSON);
+        $tripDataJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
+        dd($tripDataJSON);
 
-        return view('homepage', ['stationsData' => $this->stationsJSON]);
+        return view('homepage', ['tripDataJSON' => $tripDataJSON , 'stationsData' => $this->stationsJSON]);
     }
 }
