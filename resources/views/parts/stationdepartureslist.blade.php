@@ -3,7 +3,7 @@
     <div id="tabs" class="project-tab">
         <div class="container">
             <div class="row center">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <nav>
                         <div class="nav nav-tabs nav-fill col-sm-6" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-train-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Trein</a>

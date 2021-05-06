@@ -11211,10 +11211,10 @@ body {
 
 #content-container {
   display: flex;
-  align-items: center;
   width: 75%;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 5rem;
 }
 
 /* MainNav */
@@ -11255,11 +11255,7 @@ body {
 /* Station arrivals table */
 #project-tab-container {
   flex: 1 1 auto;
-}
-
-.project-tab {
-  padding: 10%;
-  margin-top: -8%;
+  padding-right: 10rem;
 }
 
 .project-tab #tabs {
@@ -11310,7 +11306,8 @@ body {
 
 /* Trip advice container */
 #trip-advice-container {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
+  padding-top: 15rem;
 }
 
 .trip-advice-container-bg {
@@ -11319,4 +11316,9 @@ body {
   border-radius: 5px;
   color: white;
   padding: 20px;
+}
+
+a.trip-advice-content, a:hover.trip-advice-content, a:active.trip-advice-content, a:visited.trip-advice-content {
+  color: white !important;
+  text-decoration: none;
 }
