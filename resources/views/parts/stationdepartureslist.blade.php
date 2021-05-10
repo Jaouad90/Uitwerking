@@ -34,7 +34,7 @@
                                         <td></td>
                                         @endif
                                         @if(!empty($stationDeparture['direction']))
-                                        <td>{{$stationDeparture['direction']}}</td>
+                                        <td><b>{{$stationDeparture['direction']}}</b></td>
                                         @else
                                         <td></td>
                                         @endif
@@ -43,8 +43,8 @@
                                         @else
                                         <td></td>
                                         @endif
-                                        @if(!empty($stationDeparture['product']['shortCategoryName']))
-                                        <td>{{$stationDeparture['product']['shortCategoryName']}}</td>
+                                        @if(!empty($stationDeparture['product']['longCategoryName']))
+                                        <td><b>{{$stationDeparture['product']['longCategoryName']}}</b></td>
                                         @else
                                         <td></td>
                                         @endif

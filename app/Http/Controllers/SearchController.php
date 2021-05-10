@@ -62,13 +62,9 @@ class SearchController extends Controller
         $destinationStation = "";
         $chosenStationID = Cache::get('chosenStationID');
 
-        // ISSUE: de request parameter heeft geen spaties meer. 
-        // Waardoor er geen vergelijking gemaakt worden om de id te vinden van het station
-
         foreach ($this->stationsJSON as $station) {
-
             foreach ($this->stationsJSON as $station) {
-                $key = array_search($request['destinationStationName'], $station, false);
+                $key = array_search($request['destinationStationName'], $station);
                 if ($key !== false) {
                     $destinationStation = $station['UICCode'];
                     break;
@@ -79,7 +75,6 @@ class SearchController extends Controller
         }
 
         $tripDataJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
-        dd($tripDataJSON);
 
         return view('homepage', ['tripDataJSON' => $tripDataJSON , 'stationsData' => $this->stationsJSON]);
     }
