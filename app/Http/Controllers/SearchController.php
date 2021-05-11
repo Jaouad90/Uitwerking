@@ -59,22 +59,19 @@ class SearchController extends Controller
     function searchTrip(Request $request)
     {
 
-        $destinationStation = "";
+        $destinationStationID = "";
         $chosenStationID = Cache::get('chosenStationID');
-
-        foreach ($this->stationsJSON as $station) {
             foreach ($this->stationsJSON as $station) {
-                $key = array_search($request['destinationStationName'], $station);
-                if ($key !== false) {
-                    $destinationStation = $station['UICCode'];
+                if ($request['destinationStationName'] === $station['namen']['kort']) {
+                    $destinationStationID = $station['UICCode'];
                     break;
-                } else {
-                    return response('De ID van de gekozen bestemming station is niet gevonden!!!');
                 }
             }
-        }
+            if($destinationStationID===""){
+                return response('De ID van de gekozen bestemming station is niet gevonden!!!');
+            }
 
-        $tripDataJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStation);
+        $tripDataJSON = $this->apiService->getTripDataAPI($chosenStationID, $destinationStationID);
 
         return view('homepage', ['tripDataJSON' => $tripDataJSON , 'stationsData' => $this->stationsJSON]);
     }

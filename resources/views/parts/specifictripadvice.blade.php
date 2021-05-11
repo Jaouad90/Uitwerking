@@ -8,38 +8,41 @@
                     <button class="right-button">></button>
                         @foreach ($tripDataJSON['trips'] as $tripData)
                             @php 
+                            foreach ($tripData['legs'] as $tripLegsData)
+                            {
                                 $index = strval($loop->index);
-                                $originPlannedDateTime = $tripData['legs'][$index]['origin']['plannedDateTime'];
-                                $originPlannedDateTime = strtotime($tripData['legs'][$index]['origin']['plannedDateTime']);
-                                $originPlannedDateTime = date("H:i", $originPlannedDateTime);
-                                $destinationPlannedDateTime = date("H:i",strtotime($tripData['legs'][$index]['destination']['plannedDateTime']));
+                                $originPlannedDateTime = date("H:i",strtotime($tripLegsData['origin']['plannedDateTime']));
+                                $destinationPlannedDateTime = date("H:i",strtotime($tripLegsData['destination']['plannedDateTime']));
+                            }
                             @endphp
-                            @if ($loop->index==6)
-                                @break;
-                            @endif
                                 <div class="button-container">
-                                    <button class="button-trip-choice">
-                                        <label>{{$originPlannedDateTime .' -> '. $destinationPlannedDateTime}}</label>
+                                    <button class="button-trip-choice btn btn-primary" onclick="showTripAdvice($tripLegsData)" type="button">
+                                    {{$originPlannedDateTime .' -> '. $destinationPlannedDateTime}}
                                     </button>
                                 </div>
                         @endforeach
                 </div>
 
-                <!-- <ul class="timeline">
+                
+                <ul class="timeline" style="visibility: hidden;">
                     <div class="tripadvice-departure">
-                        <div class="time-position">{{date("H:i",strtotime($tripDataJSON['legs']['origin']['plannedDateTime']))}}</div>
-                        <div>Vertrek: Spoor {{$tripDataJSON['legs']['origin']['actualTrack']}}</div>
-                        <a target="_blank" href="{{ route('stationdespartureslist', ['id' => $tripDataJSON['legs']['origin']['uicCode'], 'name' => $tripDataJSON['legs']['origin']['name']]) }}">
-                            Station {{$tripDataJSON['legs']['origin']['name']}}</a>
+                        <div class="time-position planned-departure-time"></div>
+                        <div class="planned-departure-track">Vertrek: Spoor </div>
+                        <a class="planned-departure-station" target="_blank" href="">
+                            Station </a>
                     </div>
                     <div class="tripadvice-arrival">
-                        <div class="time-position">{{date("H:i",strtotime($tripDataJSON['legs']['destination']['plannedDateTime']))}}</div>
-                        <div>Vertrek: Spoor {{$tripDataJSON['legs']['destination']['actualTrack']}}</div>
-                        <a target="_blank" href="{{ route('stationdespartureslist', ['id' => $tripDataJSON['legs']['destination']['uicCode'], 'name' => $tripDataJSON['legs']['destination']['name']]) }}">
-                            Station {{$tripDataJSON['legs']['destination']['name']}}</a>
+                        <div class="time-position planned-arrival-time"></div>
+                        <div class="planned-arrival-track">Vertrek: Spoor </div>
+                        <a class="planned-departure-station" target="_blank" href="">
+                            Station </a>
                     </div>
-                </ul> -->
+                </ul>
+
             </div>
         </div>
     </div>
 @endif
+
+
+
