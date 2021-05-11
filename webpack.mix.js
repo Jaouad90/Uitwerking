@@ -16,5 +16,6 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .scripts([
         'resources/js/ajaxService.js',
-        'resources/js/autoCompletion.js'
+        'resources/js/autoCompletion.js',
+        'resources/js/tripAdvise.js'
     ], 'public/js/all.js')
