@@ -13,12 +13,13 @@
                         $originActualDateTime = date("H:i",strtotime($tripLegsData['origin']['plannedDateTime']));
                         $destinationActualDateTime = date("H:i",strtotime($tripLegsData['destination']['plannedDateTime']));
                     }
-                    <!-- TODO: The latest is shown now. but the goal is to have the full dataset en search based on time -->
-                <script>
-                    var tripLegsData = {!!json_encode($tripLegsData) !!};
-                </script>
+                    <script>
+                        var tripsData = @json($tripDataJSON);
+                        console.log(tripsData);
+                    </script>
+
                     <div class="button-container">
-                        <button class="button-trip-choice btn btn-primary" onclick="showTripAdvice(tripLegsData)" type="button">
+                        <button class="button-trip-choice btn btn-primary" onclick="showTripAdvice(tripsData)" type="button">
                             {{$originActualDateTime .' -> '. $destinationActualDateTime}}
                         </button>
                     </div>
