@@ -173,15 +173,25 @@ const DEFAULTS = {
 
 ac.setData(setData4AutoCompletion());
 
-var showTripAdvice = function (tripsData)
+var showTripAdvice = function (tripsData, index)
 {
     
-    console.log(tripsData);
+    // console.log(tripsData);
     
     // Container visible because a choice has been made.
-    // Reset all childs.
+    // ClickedButtonID is needed to find the right trip to show.
     var containerVisibility = elementFinder('.timeline');
+    var buttonElem = elementsFinder('.button-trip-choice');
     containerVisibility.style.visibility = 'visible';
+    var clickedButtonID = buttonElem[index].dataset.index;
+
+    var trip = "";
+    tripsData.forEach(element => {
+        if(element['idx'] == clickedButtonID)
+        {
+            trip = element['legs'][0];
+        }
+    });
 
 /* Start of departure section */
     // Get departure elements.
@@ -193,15 +203,15 @@ var showTripAdvice = function (tripsData)
     departureStationElem.innerText = "";
 
     // Get time from datetime string
-    var departureDateTime = tripData.origin.plannedDateTime;
+    var departureDateTime = trip.origin.plannedDateTime;
     var startPosition = departureDateTime.search("T") +1;
     var endPosition = startPosition + 5;
     departureTime = departureDateTime.substring(""+startPosition, ""+endPosition);
 
     // Show results to the user
     departureTimeElem.innerText = departureTime;
-    departureTrackElem.innerText = "Vertrek: Spoor "+tripData.origin.actualTrack;
-    departureStationElem.innerText = "Station "+tripData.origin.name;
+    departureTrackElem.innerText = "Vertrek: Spoor "+trip.origin.actualTrack;
+    departureStationElem.innerText = "Station "+trip.origin.name;
 /* End of departure section */
 
 /* Start of stops section */
@@ -218,15 +228,15 @@ var showTripAdvice = function (tripsData)
     arrivalStationElem.innerText = "";
 
     // Get time from datetime string
-    var arrivalDateTime = tripData.destination.plannedDateTime;
+    var arrivalDateTime = trip.destination.plannedDateTime;
     var startPosition = arrivalDateTime.search("T") +1;
     var endPosition = startPosition + 5;
     arrivalTime = arrivalDateTime.substring(""+startPosition, ""+endPosition);
 
     // Show results to the user
     arrivalTimeElem.innerText = arrivalTime;
-    arrivalTrackElem.innerText = "Vertrek: Spoor "+tripData.destination.actualTrack;
-    arrivalStationElem.innerText = "Station "+tripData.destination.name;
+    arrivalTrackElem.innerText = "Vertrek: Spoor "+trip.destination.actualTrack;
+    arrivalStationElem.innerText = "Station "+trip.destination.name;
 /* End of arrival section */
     
 }
@@ -234,4 +244,9 @@ var showTripAdvice = function (tripsData)
 var elementFinder = function (selector) {
 
     return document.querySelector(selector);
+};
+
+var elementsFinder = function (selector) {
+
+    return document.querySelectorAll(selector);
 };

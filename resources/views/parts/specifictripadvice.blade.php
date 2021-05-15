@@ -2,24 +2,25 @@
 <div class="container mt-5 mb-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-
+{{$originActualDateTime = ""}}
+{{$destinationActualDateTime = ""}}
             <div class="time-choice-container">
                 <button class="left-button"><</button>
                 <button class="right-button">></button>
                 @foreach ($tripDataJSON['trips'] as $tripData)
                     @foreach ($tripData['legs'] as $tripLegsData)
-                    {
+                    @php 
                         $index = strval($loop->index);
                         $originActualDateTime = date("H:i",strtotime($tripLegsData['origin']['plannedDateTime']));
                         $destinationActualDateTime = date("H:i",strtotime($tripLegsData['destination']['plannedDateTime']));
-                    }
+                    @endphp
+                    @endforeach
                     <script>
-                        var tripsData = @json($tripDataJSON);
-                        console.log(tripsData);
+                        var tripsData = @json($tripDataJSON, JSON_PRETTY_PRINT);
                     </script>
 
                     <div class="button-container">
-                        <button class="button-trip-choice btn btn-primary" onclick="showTripAdvice(tripsData)" type="button">
+                        <button class="button-trip-choice btn btn-primary" data-index="{{strval($loop->index)}}" onclick="showTripAdvice(tripsData['trips'], {{strval($loop->index)}})" type="button">
                             {{$originActualDateTime .' -> '. $destinationActualDateTime}}
                         </button>
                     </div>

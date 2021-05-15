@@ -58,11 +58,10 @@ class SearchController extends Controller
      */
     function searchTrip(Request $request)
     {
-
         $destinationStationID = "";
         $chosenStationID = Cache::get('chosenStationID');
             foreach ($this->stationsJSON as $station) {
-                if ($request['destinationStationName'] === $station['namen']['kort']) {
+                if ($request['destinationStationName'] === $station['namen']['lang']) {
                     $destinationStationID = $station['UICCode'];
                     break;
                 }
