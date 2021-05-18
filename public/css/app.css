@@ -11345,7 +11345,7 @@ ul.timeline > div > li {
   padding-left: 20px;
 }
 
-ul.timeline > div > li:before {
+ul.timeline > div > li::after {
   content: " ";
   background: white;
   display: inline-block;

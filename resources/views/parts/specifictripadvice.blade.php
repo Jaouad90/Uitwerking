@@ -29,14 +29,14 @@
 
 
             <ul class="timeline" style="visibility: hidden;">
-                <div class="tripadvice-departure">
+                <div class="tripadvice-departure row">
                     <li>
                         <div class="time-position planned-departure-time"></div>
                         <div class="planned-departure-track">Vertrek: Spoor </div>
                         <a class="planned-departure-station" target="_blank" href="">Station </a>
                     </li>
                 </div>
-                <div class="tripadvice-arrival">
+                <div class="tripadvice-arrival row">
                     <li>
                         <div class="time-position planned-arrival-time"></div>
                         <div class="planned-arrival-track">Vertrek: Spoor </div>
